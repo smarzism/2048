@@ -3,413 +3,203 @@
 #include <time.h>
 #include <conio.h>
 #include <windows.h>
-int print(int a[][4],int k,int ok);
-int loose(int a[4][4],int ok);
-int main(){
-	
-	int blocks=9,lose=0,k=0,ok=0,move=0,score=0,hi=0,i,j,i1,j1;
-	while(blocks==9){
-		int a[4][4]={0};
-		
-		score=0;
-		while(lose==0){
-			
-			if(hi==0){
-				k++;
-				srand(time(NULL));
-				while(blocks==9){
-					i1=rand()%4;
-					j1=rand()%4;
-					//printf("%d",k);
-					if(a[i1][j1]==0){
-						int tmp;
-						tmp=rand()%10;
-						if(tmp==8 || tmp==9){
-							a[i1][j1]=4;
-						}
-						else{
-							a[i1][j1]=2;
-						}
-						break;
-					}
-				}
-			}
-			print(a,k,ok);
-			move=0;
-			int ch;
-			ch=_getch();
-			if(ch=='e'){
-				system("cls");
-				return 0;
-			}
-			if(ch=='n'){
-				system("cls");
-				break;
-			}
-			// Right Side.....................................................................................................
-			if(ch==77){
-				int B[4][4]={0};
-				int haveNumber=0;
-				ok=0;
-				k=0;
-				int i2,j2;
-				for(i2=0;i2<4;i2++){
-					for(j2=2;j2>-1;j2--){
-						if(a[i2][j2]!=0){
-							haveNumber=1;
-							int b=j2;
-							while(b<3){
-							
-								
-								
-								if(a[i2][b]==a[i2][b+1]){
-									if(B[i2][b+1]==1)
-										break;
-									B[i2][b+1]=1;
-									hi=0;
-									move=1;
-								
-									a[i2][b]=0;
-									a[i2][b+1] *=2;
-									score+=a[i2][b+1];
-									if(a[i2][b+1]==2048){
-										printf("\n\n                                                ");
-										printf("(^_^) YOU WIN (^_^)");
-									}
-									break;
-								}
-								
-								if(a[i2][b]!=a[i2][b+1] && a[i2][b+1]!=0){
-									
-									break;
-								}
-								if(a[i2][b+1]==0){
-									hi=0;
-									move=1;
-									a[i2][b+1]=a[i2][b];
-									a[i2][b]=0;
-									b++;
-								}
-							
-							}
-							
-						}
-					}
-				}
-				
-				// Game loss detection .............................................................................................
-				for(j=0;j<4;j++){
-					for(i=0;i<4;i++){
-						if(a[i][j]!=0){
-							k++;}
-					}
-				}
-				ok=loose(a,ok);
-				
-				if(haveNumber==0 || move==0){
-					hi=56;
-					system("cls");
-				
-					continue;	
-				
-				}
-				//.....................................................................................................
-				system("cls");
-				
-				continue;	
-				
-			}
-			// Print ....................................................................................................................
-			if(ch==75){
-				int B[4][4]={0};
-				ok=0;
-				k=0;
-				int haveNumber=0;
-				int i2,j2;
-				for(i2=0;i2<4;i2++){
-					for(j2=1;j2<4;j2++){
-						if(a[i2][j2]!=0){
-							haveNumber=1;
-							int b=j2;
-							while(b>0){
-							
-								
-								
-								
-								
-								if(a[i2][b]==a[i2][b-1]){
-									if(B[i2][b-1]==1)
-										break;
-									B[i2][b-1]=1;
-									
-									hi=0;
-									move=1;
-									a[i2][b]=0;
-									a[i2][b-1] *=2;
-									score+=a[i2][b-1];
-									if(a[i2][b-1]==2048){
-										printf("\n\n                                                ");
-										printf("(^_^) YOU WIN (^_^)");
-									}
-									break;	
-								}
-								if(a[i2][b]!=a[i2][b-1] && a[i2][b-1]!=0){
-									break;
-								}
-								if(a[i2][b-1]==0){
-									hi=0;
-									move=1;
-									a[i2][b-1]=a[i2][b];
-									a[i2][b]=0;
-									b--;
-								}
-							
-							}
-							
-						}
-					}
-				}
-				// Game loss detection.............................................................................................
-				for(j=0;j<4;j++){
-					for(i=0;i<4;i++){
-						if(a[i][j]!=0){
-							k++;}
-					}
-				}
-				
-				loose(a,ok);
-				if(haveNumber==0 || move==0){
-					hi=34;
-					system("cls");
-				
-					continue;	
-				
-				}
-				//.....................................................................................................
-				system("cls");
-				
-				continue;	
-				
-			}
-			// Bottom Side .....................................................................................................................
-			if(ch==80){
-				int B[4][4]={0};
-				ok=0;
-				k=0;
-				int haveNumber=0;
-				int i2,j2;
-				for(j2=0;j2<4;j2++){
-					for(i2=2;i2>-1;i2--){
-						if(a[i2][j2]!=0){
-							haveNumber=1;
-							int b=i2;
-							while(b<3){
-							
-								
-								if(a[b][j2]==a[b+1][j2]){
-									if(B[b+1][j2]==1)
-										break;
-									B[b+1][j2]=1;
-									
-									hi=0;
-									move=1;
-									a[b][j2]=0;
-									a[b+1][j2] *=2;
-									score+=a[b+1][j2];
-									if(a[b+1][j2]==2048){
-										printf("\n\n                                                ");
-										printf("(^_^) YOU WIN (^_^)");
-									}
-								 	break;
-								}
-								
-								if(a[b][j2]!=a[b+1][j2] && a[b+1][j2]!=0){
-									
-									break;
-								}
-								
-								
-								if(a[b+1][j2]==0){
-									hi=0;
-									move=1;
-									a[b+1][j2]=a[b][j2];
-									a[b][j2]=0;
-									b++;
-								}
-							
-							}
-							
-						}
-					}
-				}
-				
-				// Game loss detection.............................................................................................
-				for(j=0;j<4;j++){
-					for(i=0;i<4;i++){
-						if(a[i][j]!=0){
-							k++;}
-					}
-				}
-				ok=loose(a,ok);
-				if(haveNumber==0 || move==0){
-					hi=56;
-					system("cls");
-				
-					continue;	
-				
-				}
-				//.....................................................................................................
-				system("cls");
-				
-				continue;	
-				
-			}
-			//bala....................................................................................................................
-			if(ch==72){
-				int B[4][4]={0};
-				ok=0;
-				k=0;
-				int haveNumber=0;
-				int i2,j2;
-				for(j2=0;j2<4;j2++){
-					for(i2=1;i2<4;i2++){
-						
-						if(a[i2][j2]!=0){
-							haveNumber=1;
-							int b=i2;
-							while(b>0){
-								
-								if(a[b][j2]==a[b-1][j2]){
-									if(B[b-1][j2]==1)
-										break;
-									B[b-1][j2]=1;
-									
-									hi=0;
-									move=1;
-									a[b][j2]=0;
-									a[b-1][j2] *=2;
-									score+=a[b-1][j2];
-									if(a[b-1][j2]==2048){
-										printf("\n\n                                                ");
-										printf("(^_^) YOU WIN (^_^)");
-									}
-									
-								}
-								if(a[b][j2]!=a[b-1][j2] && a[b-1][j2]!=0){
-									break;
-								}
-								if(a[b-1][j2]==0){
-									hi=0;
-									move=1;
-									a[b-1][j2]=a[b][j2];
-									a[b][j2]=0;
-									b--;
-								}
-							
-							}
-							
-						}
-					}
-				}
-				// Game loss detection.............................................................................................
-				for(j=0;j<4;j++){
-					for(i=0;i<4;i++){
-						if(a[i][j]!=0){
-							k++;}
-					}
-				}
-				ok=loose(a,ok);
-				if(haveNumber==0 || move==0){
-					hi=34;
-					system("cls");
-				
-					continue;	
-				
-				}
-				//.....................................................................................................
-				system("cls");
-				
-				continue;	
-				
-			}
-			
-			//0_0............................................................................................................................
-			else{
-				hi=24;
-				system("cls");
-				continue;
-			}
-		}
-		continue;
-	}
+
+#define SIZE 4
+#define WIN_CONDITION 2048
+
+void printBoard(int board[SIZE][SIZE], int score, int k, int ok);
+int checkLoss(int board[SIZE][SIZE]);
+void spawnRandom(int board[SIZE][SIZE]);
+int moveTiles(int board[SIZE][SIZE], char direction, int* score);
+void mergeTiles(int* tile1, int* tile2, int* moveMade, int* score);
+void playGame();
+
+int main() {
+    playGame();
+    return 0;
 }
-int print(int a[4][4] ,int k,int ok ){
-	int i,j,score;
-	printf("\n                                                    YOUR SCORE : %d\n",score);
-			printf("                                                ");
-			printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n",201,205,205,205,205,203,205,205,205,205,203,205,205,205,205,203,205,205,205,205,187);
-			
-			for(i=0;i<4;i++){
-				for(j=0;j<4;j++){
-					if(j==0){
-						printf("                                                ");
-					}
-				 	printf("%c",186);
-					 if(a[i][j]==0){
-				 		printf("    ");
-				 	}
-				 	else{
-				 		printf("%-4d",a[i][j]);
-				 	}
-					if(j==3){
-						printf("%c\n",186);
-					}
-				
-				}
-				printf("                                                ");
-				if(i==1 || i==2 || i==0){
-					printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n",204,205,205,205,205,206,205,205,205,205,206,205,205,205,205,206,205,205,205,205,185);
-				}
-					
-			}
-			
-			
-			printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n",200,205,205,205,205,202,205,205,205,205,202,205,205,205,205,202,205,205,205,205,188);
-			
-			printf("                                                ");
-			printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c",177,177,177,177,177,177,177,177,177,177,177,177,177,177,177,177,177,177,177,177,177,177);
-			printf("\n                                                %cplay with arrow keys%c\n",177,177);
-			printf("                                                ");
-			printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n",177,177,177,177,177,177,177,177,177,177,177,177,177,177,177,177,177,177,177,177,177,177);
-			printf("                                                press N to new game\n");
-			
-			printf("                                                press E to exit\n");
-			
-			if(k==16 && ok==8){
-				printf("\n\n                                                ");
-				printf("(+_+) YOU LOSE (+_+)\n");
-				
-				
-			}
-			return 0;
-			
+
+void playGame() {
+    int board[SIZE][SIZE] = {0};
+    int score = 0, k = 0, lose = 0, moveMade = 0, ok = 0;
+    char input;
+
+    srand(time(NULL));
+
+    while (1) {
+        spawnRandom(board);
+        system("cls");
+        printBoard(board, score, k, ok);
+
+        if (checkLoss(board) && k == SIZE * SIZE) {
+            printf("\n\n                                                (+_+) YOU LOSE (+_+)\n");
+            break;
+        }
+
+        input = _getch();
+        if (input == 'e') {
+            system("cls");
+            return;
+        } else if (input == 'n') {
+            system("cls");
+            playGame();  // Restart game
+        } else {
+            moveMade = moveTiles(board, input, &score);
+            if (!moveMade) continue;  // Skip if no valid move
+        }
+    }
 }
-int loose(int a[4][4],int ok){
-			if(a[0][0]!=a[0][1] && a[0][0]!=a[1][0]){
-				ok++;}
-			if(a[0][2]!=a[0][1] && a[0][2]!=a[1][2] && a[0][2]!=a[0][3]){
-				ok++;}
-			if(a[1][1]!=a[0][1] && a[1][1]!=a[1][0] && a[1][1]!=a[1][2] && a[1][1]!=a[2][1]){
-				ok++;}
-			if(a[1][3]!=a[1][2] && a[1][3]!=a[0][3] && a[1][3]!=a[2][3]){
-				ok++;}
-			if(a[2][0]!=a[1][0] && a[2][0]!=a[2][1] && a[2][0]!=a[3][0]){
-				ok++;}
-			if(a[2][2]!=a[2][1] && a[2][2]!=a[1][2] && a[2][2]!=a[2][3] && a[2][2]!=a[3][2]){
-				ok++;}
-			if(a[3][1]!=a[2][1] && a[3][1]!=a[3][0] && a[3][1]!=a[3][2]){
-				ok++;}
-			if(a[3][3]!=a[3][2] && a[3][3]!=a[2][3]){
-				ok++;}
-			return ok;
+
+void spawnRandom(int board[SIZE][SIZE]) {
+    int emptyCells = 0, i, j;
+    
+    // Count empty cells
+    for (i = 0; i < SIZE; i++) {
+        for (j = 0; j < SIZE; j++) {
+            if (board[i][j] == 0) emptyCells++;
+        }
+    }
+
+    if (emptyCells == 0) return;  // No space to spawn
+
+    // Find a random empty cell and spawn a 2 or 4
+    int randomCell = rand() % emptyCells;
+    for (i = 0; i < SIZE; i++) {
+        for (j = 0; j < SIZE; j++) {
+            if (board[i][j] == 0) {
+                if (randomCell == 0) {
+                    board[i][j] = (rand() % 10 == 0) ? 4 : 2;
+                    return;
+                }
+                randomCell--;
+            }
+        }
+    }
+}
+
+void printBoard(int board[SIZE][SIZE], int score, int k, int ok) {
+    printf("\n                                                    YOUR SCORE : %d\n", score);
+    printf("                                                ");
+    printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 201, 205, 205, 205, 205, 203, 205, 205, 205, 205, 203, 205, 205, 205, 205, 203, 205, 205, 205, 205, 187);
+    
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            printf("                                                %c", 186);
+            if (board[i][j] == 0) {
+                printf("    ");
+            } else {
+                printf("%-4d", board[i][j]);
+            }
+        }
+        printf("%c\n", 186);
+        if (i < SIZE - 1) {
+            printf("                                                ");
+            printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 204, 205, 205, 205, 205, 206, 205, 205, 205, 205, 206, 205, 205, 205, 205, 206, 205, 205, 205, 205, 185);
+        }
+    }
+    printf("                                                %c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 200, 205, 205, 205, 205, 202, 205, 205, 205, 205, 202, 205, 205, 205, 205, 202, 205, 205, 205, 205, 188);
+    
+    printf("                                                Press N to start a new game\n");
+    printf("                                                Press E to exit\n");
+}
+
+int checkLoss(int board[SIZE][SIZE]) {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            if (board[i][j] == 0) return 0;  // Still have space
+            if (i > 0 && board[i][j] == board[i - 1][j]) return 0;  // Merge possible vertically
+            if (j > 0 && board[i][j] == board[i][j - 1]) return 0;  // Merge possible horizontally
+        }
+    }
+    return 1;  // No moves left
+}
+
+int moveTiles(int board[SIZE][SIZE], char direction, int* score) {
+    int moveMade = 0;
+    int rotatedBoard[SIZE][SIZE] = {0};
+
+    // Rotate board based on the move direction (L, R, U, D)
+    if (direction == 75) {  // Left
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                rotatedBoard[i][j] = board[i][j];
+            }
+        }
+    } else if (direction == 77) {  // Right
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                rotatedBoard[i][SIZE - 1 - j] = board[i][j];
+            }
+        }
+    } else if (direction == 72) {  // Up
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                rotatedBoard[j][i] = board[i][j];
+            }
+        }
+    } else if (direction == 80) {  // Down
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                rotatedBoard[SIZE - 1 - j][i] = board[i][j];
+            }
+        }
+    } else {
+        return 0;  // Invalid input
+    }
+
+    // Process the movement
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 1; j < SIZE; j++) {
+            if (rotatedBoard[i][j] != 0) {
+                for (int k = j - 1; k >= 0; k--) {
+                    if (rotatedBoard[i][k] == 0) {
+                        rotatedBoard[i][k] = rotatedBoard[i][k + 1];
+                        rotatedBoard[i][k + 1] = 0;
+                        moveMade = 1;
+                    } else if (rotatedBoard[i][k] == rotatedBoard[i][k + 1]) {
+                        mergeTiles(&rotatedBoard[i][k], &rotatedBoard[i][k + 1], &moveMade, score);
+                        break;
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    // Restore board back to original orientation
+    if (direction == 75) {  // Left
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                board[i][j] = rotatedBoard[i][j];
+            }
+        }
+    } else if (direction == 77) {  // Right
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                board[i][j] = rotatedBoard[i][SIZE - 1 - j];
+            }
+        }
+    } else if (direction == 72) {  // Up
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                board[i][j] = rotatedBoard[j][i];
+            }
+        }
+    } else if (direction == 80) {  // Down
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                board[i][j] = rotatedBoard[SIZE - 1 - j][i];
+            }
+        }
+    }
+
+    return moveMade;
+}
+
+void mergeTiles(int* tile1, int* tile2, int* moveMade, int* score) {
+    *tile1 += *tile2;
+    *tile2 = 0;
+    *score += *tile1;
+    *moveMade = 1;
 }
