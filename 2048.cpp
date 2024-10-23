@@ -4,11 +4,11 @@
 #include <conio.h>
 #include <windows.h>
 int print(int a[][4],int k,int ok);
-int bakht(int a[4][4],int ok);
+int loose(int a[4][4],int ok);
 int main(){
 	
-	int marzi=9,lose=0,k=0,ok=0,harekat=0,score=0,hi=0,i,j,i1,j1;
-	while(marzi==9){
+	int blocks=9,lose=0,k=0,ok=0,move=0,score=0,hi=0,i,j,i1,j1;
+	while(blocks==9){
 		int a[4][4]={0};
 		
 		score=0;
@@ -17,7 +17,7 @@ int main(){
 			if(hi==0){
 				k++;
 				srand(time(NULL));
-				while(marzi==9){
+				while(blocks==9){
 					i1=rand()%4;
 					j1=rand()%4;
 					//printf("%d",k);
@@ -35,7 +35,7 @@ int main(){
 				}
 			}
 			print(a,k,ok);
-			harekat=0;
+			move=0;
 			int ch;
 			ch=_getch();
 			if(ch=='e'){
@@ -46,17 +46,17 @@ int main(){
 				system("cls");
 				break;
 			}
-			//rast.....................................................................................................
+			// Right Side.....................................................................................................
 			if(ch==77){
 				int B[4][4]={0};
-				int adaddarim=0;
+				int haveNumber=0;
 				ok=0;
 				k=0;
 				int i2,j2;
 				for(i2=0;i2<4;i2++){
 					for(j2=2;j2>-1;j2--){
 						if(a[i2][j2]!=0){
-							adaddarim=1;
+							haveNumber=1;
 							int b=j2;
 							while(b<3){
 							
@@ -67,7 +67,7 @@ int main(){
 										break;
 									B[i2][b+1]=1;
 									hi=0;
-									harekat=1;
+									move=1;
 								
 									a[i2][b]=0;
 									a[i2][b+1] *=2;
@@ -85,7 +85,7 @@ int main(){
 								}
 								if(a[i2][b+1]==0){
 									hi=0;
-									harekat=1;
+									move=1;
 									a[i2][b+1]=a[i2][b];
 									a[i2][b]=0;
 									b++;
@@ -97,16 +97,16 @@ int main(){
 					}
 				}
 				
-				//tashkhis bakht.............................................................................................
+				// Game loss detection .............................................................................................
 				for(j=0;j<4;j++){
 					for(i=0;i<4;i++){
 						if(a[i][j]!=0){
 							k++;}
 					}
 				}
-				ok=bakht(a,ok);
+				ok=loose(a,ok);
 				
-				if(adaddarim==0 || harekat==0){
+				if(haveNumber==0 || move==0){
 					hi=56;
 					system("cls");
 				
@@ -119,17 +119,17 @@ int main(){
 				continue;	
 				
 			}
-			//chap....................................................................................................................
+			// Print ....................................................................................................................
 			if(ch==75){
 				int B[4][4]={0};
 				ok=0;
 				k=0;
-				int adaddarim=0;
+				int haveNumber=0;
 				int i2,j2;
 				for(i2=0;i2<4;i2++){
 					for(j2=1;j2<4;j2++){
 						if(a[i2][j2]!=0){
-							adaddarim=1;
+							haveNumber=1;
 							int b=j2;
 							while(b>0){
 							
@@ -143,7 +143,7 @@ int main(){
 									B[i2][b-1]=1;
 									
 									hi=0;
-									harekat=1;
+									move=1;
 									a[i2][b]=0;
 									a[i2][b-1] *=2;
 									score+=a[i2][b-1];
@@ -158,7 +158,7 @@ int main(){
 								}
 								if(a[i2][b-1]==0){
 									hi=0;
-									harekat=1;
+									move=1;
 									a[i2][b-1]=a[i2][b];
 									a[i2][b]=0;
 									b--;
@@ -169,7 +169,7 @@ int main(){
 						}
 					}
 				}
-				//tashkhis bakht.............................................................................................
+				// Game loss detection.............................................................................................
 				for(j=0;j<4;j++){
 					for(i=0;i<4;i++){
 						if(a[i][j]!=0){
@@ -177,8 +177,8 @@ int main(){
 					}
 				}
 				
-				bakht(a,ok);
-				if(adaddarim==0 || harekat==0){
+				loose(a,ok);
+				if(haveNumber==0 || move==0){
 					hi=34;
 					system("cls");
 				
@@ -191,17 +191,17 @@ int main(){
 				continue;	
 				
 			}
-			//paeen.....................................................................................................................
+			// Bottom Side .....................................................................................................................
 			if(ch==80){
 				int B[4][4]={0};
 				ok=0;
 				k=0;
-				int adaddarim=0;
+				int haveNumber=0;
 				int i2,j2;
 				for(j2=0;j2<4;j2++){
 					for(i2=2;i2>-1;i2--){
 						if(a[i2][j2]!=0){
-							adaddarim=1;
+							haveNumber=1;
 							int b=i2;
 							while(b<3){
 							
@@ -212,7 +212,7 @@ int main(){
 									B[b+1][j2]=1;
 									
 									hi=0;
-									harekat=1;
+									move=1;
 									a[b][j2]=0;
 									a[b+1][j2] *=2;
 									score+=a[b+1][j2];
@@ -231,7 +231,7 @@ int main(){
 								
 								if(a[b+1][j2]==0){
 									hi=0;
-									harekat=1;
+									move=1;
 									a[b+1][j2]=a[b][j2];
 									a[b][j2]=0;
 									b++;
@@ -243,15 +243,15 @@ int main(){
 					}
 				}
 				
-				//tashkhis bakht.............................................................................................
+				// Game loss detection.............................................................................................
 				for(j=0;j<4;j++){
 					for(i=0;i<4;i++){
 						if(a[i][j]!=0){
 							k++;}
 					}
 				}
-				ok=bakht(a,ok);
-				if(adaddarim==0 || harekat==0){
+				ok=loose(a,ok);
+				if(haveNumber==0 || move==0){
 					hi=56;
 					system("cls");
 				
@@ -269,13 +269,13 @@ int main(){
 				int B[4][4]={0};
 				ok=0;
 				k=0;
-				int adaddarim=0;
+				int haveNumber=0;
 				int i2,j2;
 				for(j2=0;j2<4;j2++){
 					for(i2=1;i2<4;i2++){
 						
 						if(a[i2][j2]!=0){
-							adaddarim=1;
+							haveNumber=1;
 							int b=i2;
 							while(b>0){
 								
@@ -285,7 +285,7 @@ int main(){
 									B[b-1][j2]=1;
 									
 									hi=0;
-									harekat=1;
+									move=1;
 									a[b][j2]=0;
 									a[b-1][j2] *=2;
 									score+=a[b-1][j2];
@@ -300,7 +300,7 @@ int main(){
 								}
 								if(a[b-1][j2]==0){
 									hi=0;
-									harekat=1;
+									move=1;
 									a[b-1][j2]=a[b][j2];
 									a[b][j2]=0;
 									b--;
@@ -311,15 +311,15 @@ int main(){
 						}
 					}
 				}
-				//tashkhis bakht.............................................................................................
+				// Game loss detection.............................................................................................
 				for(j=0;j<4;j++){
 					for(i=0;i<4;i++){
 						if(a[i][j]!=0){
 							k++;}
 					}
 				}
-				ok=bakht(a,ok);
-				if(adaddarim==0 || harekat==0){
+				ok=loose(a,ok);
+				if(haveNumber==0 || move==0){
 					hi=34;
 					system("cls");
 				
@@ -394,7 +394,7 @@ int print(int a[4][4] ,int k,int ok ){
 			return 0;
 			
 }
-int bakht(int a[4][4],int ok){
+int loose(int a[4][4],int ok){
 			if(a[0][0]!=a[0][1] && a[0][0]!=a[1][0]){
 				ok++;}
 			if(a[0][2]!=a[0][1] && a[0][2]!=a[1][2] && a[0][2]!=a[0][3]){
